@@ -34,7 +34,7 @@ require Exporter;
 
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-$VERSION	= '1.12';
+$VERSION	= '1.14';
 
 # Preloaded methods go here.
 
@@ -480,6 +480,32 @@ This is an alias for $root. See below.
 =head1 The $root hash reference
 
 This points to the root of the tree.
+
+=head1 INSTALLATION
+
+You install C<Class::Tree>, as you would install any perl module library,
+by running these commands:
+
+	perl Makefile.PL
+	make
+	make test
+	make install
+
+If you want to install a private copy of C<Class::Tree> in your home
+directory, then you should try to produce the initial Makefile with
+something like this command:
+
+	perl Makefile.PL LIB=~/perl
+		or
+	perl Makefile.PL LIB=C:/Perl/Site/Lib
+
+If, like me, you don't have permission to write man pages into unix system
+directories, use:
+
+	make pure_install
+
+instead of make install. This option is secreted in the middle of p 414 of the
+second edition of the dromedary book.
 
 =head1 WARNING re Perl bug
 

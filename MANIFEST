@@ -1,10 +1,11 @@
 Changes.txt
-MANIFEST
-MANIFEST.SKIP
-Makefile.PL
-Tree.pm
 cppTree.pl
 dirTree.pl
+Makefile.PL
+MANIFEST
+MANIFEST.SKIP
+Readme.txt
 test.pl
+Tree.pm
 t/base.t
 t/family.h

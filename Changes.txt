@@ -1,5 +1,14 @@
 Revision history for Perl extension Class-Tree.
 
+1.14 26-May-99
+--------------
+o Ensure POD survives buggy pod2man
+o Ship Readme.txt, the output of pod2text
+
+1.13 19-Apr-99
+--------------
+o Change Makefile.PL to support ActivePerl's ppm.
+
 1.11  1-Apr-99
 --------------
 o Change die to croak

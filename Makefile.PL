@@ -4,6 +4,11 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile
 (
+	($] ge '5.005') ?
+	(
+		'AUTHOR' => 'Ron Savage (rpsavage@ozemail.com.au)',
+		'ABSTRACT' => 'C++ class hierarchies & disk directories',
+    ) : (),
 'clean'				=>
 	{
 	'FILES'			=> 'blib/* Makefile MANIFEST Class-Tree-*'
