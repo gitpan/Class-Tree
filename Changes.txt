@@ -1,5 +1,14 @@
 Revision history for Perl extension Class-Tree.
 
+1.20 27-Jun-99
+--------------
+o Thanks to CPAN testers
+o Change test.pl so it is not dependent on Getopt::Simple.
+o Add documentation for buildDirTree(), writeTree(), buildClassTree() and
+	writeClassList(). My apologies for not including this earlier
+o Add documentation for $ENV{'PERCEPS'} (only used for C++ parsing)
+o Add examples to the synopsis in the pod
+
 1.14 26-May-99
 --------------
 o Ensure POD survives buggy pod2man
@@ -26,3 +35,8 @@ Rename testDirTree.pl to dirTree.pl.
 Rename testCppTree.pl to cppTree.pl.
 
 Put code from dirTree.pl & cppTree.pl into test.pl.
+
+V 1.10 attempts to write to the current directory if it cannot write to the directory
+containing the *.h files. This makes it possible to run testCppTree.pl (say) and input
+a directory on CDROM.
+

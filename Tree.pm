@@ -34,7 +34,7 @@ require Exporter;
 
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-$VERSION	= '1.14';
+$VERSION	= '1.20';
 
 # Preloaded methods go here.
 
@@ -454,8 +454,24 @@ and C++ classes.
 	# Or ...
 	# use Class::Tree qw($root);
 
-	my($tree) = new Class::Tree;
+	# 1. A directory tree.
+	my($dir1)  = 'someDir/someSubdir';
+	my($tree1) = new Class::Tree;
+	$tree1 -> buildDirTree($dir1, ['CVS']);
+	$tree1 -> writeTree();
 
+	# 2. A C++ class tree.
+	use Cwd;
+	my($currentDir) = cwd();
+	my($dir2)       = 'someDir/someSubdir'; # Contains *.h. See t/family.h.
+	my($origin)     = 'Root';
+	my($tree2)      = new Class::Tree;
+	$tree2 -> buildClassTree($dir2, $origin, $currentDir);
+	print "Class tree\n----------\n";
+	$tree2 -> writeTree();
+	print "\n";
+	print "Class list\n----------\n";
+	$tree2 -> writeClassList();
 
 =head1 DESCRIPTION
 
@@ -473,13 +489,44 @@ C++ class trees
 
 =back
 
-=head1 The $classRef -> {'root'} hash reference
+=head1 ENVIRONMENT VARIABLE PERCEPS
+
+I assume $ENV{'PERCEPS'} is the directory containing the C++ parser perceps,
+or perceps.pl. So, you must define this variable before calling buildClassTree().
+
+=head1 THE HASH REFERENCE $classRef -> {'root'}
 
 This is an alias for $root. See below.
 
-=head1 The $root hash reference
+=head1 THE HASH REFERENCE $root
 
 This points to the root of the tree.
+
+=head1 METHOD: buildClassTree($dir, $fontName, $baseDir)
+
+Call this to initiate processing by the C++ parser 'perceps'.
+
+The directories $dir and $baseDir are passed to 'perceps'.
+
+$fontName is a string used to label the root of the tree.
+
+Then call writeTree() and/or writeClassList().
+
+=head1 METHOD: buildDirTree($dir, [qw/dirs to ignore/])
+
+Call this to build a memory image of a directory tree. Use the 2nd parameter
+to specify a list of directories to ignore.
+
+Then call writeTree().
+
+=head1 METHOD: writeClassList()
+
+Call this after calling buildClassTree(), to print the C++ class structure.
+
+=head1 METHOD: writeTree()
+
+Call this after calling buildClassTree() or buildDirTree(),
+to print the directory structure.
 
 =head1 INSTALLATION
 
@@ -528,12 +575,6 @@ first space stops the dereference taking place. Outside double quotes the
 scanner correctly associates the $self token with the {'thing'} token.
 
 I regard this as a bug.
-
-=head1 CHANGES
-
-V 1.10 attempts to write to the current directory if it cannot write to the directory
-containing the *.h files. This makes it possible to run testCppTree.pl (say) and input
-a directory on CDROM.
 
 =head1 AUTHOR
 

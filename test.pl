@@ -12,39 +12,6 @@ no strict 'refs';
 
 use Class::Tree qw($root);
 use Cwd;
-use Getopt::Simple qw($switch);
-
-# ----------------------------------------------------------------------
-
-sub init
-{
-	my($default) =
-	{
-	'help' =>
-		{
-		'type'		=> '',
-		'env'		=> '-',
-		'default'	=> '',
-		'order'		=> 1,
-		},
-	'ignore' =>
-		{
-		'type'		=> '=s@',
-		'env',		=> '-',
-		'default'	=> '',
-		'order'		=> 2,
-		},
-	};
-
-	my($option) = new Getopt::Simple;
-
-	if (! $option -> getOptions($default, "Usage: testDirTree.pl [options]") )
-	{
-		# Failure.
-		exit(-1);
-	}
-
-}	# End of init.
 
 # ----------------------------------------------------------------------
 
@@ -70,8 +37,6 @@ sub printTree
 
 print "Testing a directory tree. \n";
 
-&init();
-
 my($dir1)	= cwd();
 $dir1		= cwd() if ($dir1 eq '.');
 
@@ -79,7 +44,7 @@ die("Failure: $dir1 does not exist\n") if (! -e $dir1);
 
 my($tree1) = new Class::Tree;
 
-$tree1 -> buildDirTree($dir1, $switch -> {'ignore'});
+$tree1 -> buildDirTree($dir1, ['CVS', 'bin']);
 
 $tree1 -> writeTree();
 
@@ -89,7 +54,7 @@ print "\n";
 
 &printTree($root, -1);
 
-print '=' x 60, "\n";
+print '=' x 70, "\n";
 
 # 2. cppTree.pl.
 
@@ -114,7 +79,7 @@ print "\n";
 print "Class list\n----------\n";
 $tree2 -> writeClassList();
 
-print '=' x 60, "\n";
+print '=' x 70, "\n";
 
 # Success.
 exit(0);
