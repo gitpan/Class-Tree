@@ -6,7 +6,6 @@
 # Purpose:
 #	Print a directory tree and a class tree.
 
-use integer;
 use strict;
 no strict 'refs';
 

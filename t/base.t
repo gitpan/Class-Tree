@@ -1,6 +1,5 @@
 # -*- perl -*-
 
-use integer;
 use strict;
 
 use vars qw($loaded);

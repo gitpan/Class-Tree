@@ -1,5 +1,9 @@
 Revision history for Perl extension Class-Tree.
 
+1.21  Sun May 12 13:12:11 2002
+	- Clean up licence and email stuff in all modules, scripts and other docs.
+		Upgrading is not necessary
+
 1.20 27-Jun-99
 --------------
 o Thanks to CPAN testers

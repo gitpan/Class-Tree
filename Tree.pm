@@ -6,12 +6,20 @@ package Class::Tree;
 # Documentation:
 #	POD-style documentation is at the end. Extract it with pod2html.*.
 #
-# Tabs:
-#	4 spaces || die.
+# Note:
+#	tab = 4 spaces || die.
 #
 # Author:
-#	Ron Savage	rpsavage@ozemail.com.au.
-# --------------------------------------------------------------------------
+#	Ron Savage <ron@savage.net.au>
+#	Home page: http://savage.net.au/index.html
+#
+# Licence:
+#	Australian Copyright (c) 1999-2002 Ron Savage.
+#
+#	All Programs of mine are 'OSI Certified Open Source Software';
+#	you can redistribute them and/or modify them under the terms of
+#	The Artistic License, a copy of which is available at:
+#	http://www.opensource.org/licenses/index.html
 
 use strict;
 no strict 'refs';
@@ -34,7 +42,7 @@ require Exporter;
 
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-$VERSION	= '1.20';
+$VERSION	= '1.21';
 
 # Preloaded methods go here.
 
@@ -196,7 +204,7 @@ sub perceps
 		carp("Can't open($fileName) for writing: $! \nTrying current directory \n");
 		$fileName	= $baseDir . $fileName;
 		$dirName	= $baseDir;
-		open(OUT, "> $fileName") || croak("Can't even open($fileName) for writing: $!");  
+		open(OUT, "> $fileName") || croak("Can't even open($fileName) for writing: $!");
 	}
 
 	print OUT "{class} {parents}\n";
@@ -578,9 +586,13 @@ I regard this as a bug.
 
 =head1 AUTHOR
 
-C<Class::Tree> was written by Ron Savage I<E<lt>rpsavage@ozemail.com.auE<gt>> in 1997.
+C<Class::Tree> was written by Ron Savage I<E<lt>ron@savage.net.auE<gt>> in 1997.
 
 =head1 LICENCE
 
-This program is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
+Australian copyright (c) 1999-2002 Ron Savage.
+
+	All Programs of mine are 'OSI Certified Open Source Software';
+	you can redistribute them and/or modify them under the terms of
+	The Artistic License, a copy of which is available at:
+	http://www.opensource.org/licenses/index.html
