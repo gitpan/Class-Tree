@@ -57,6 +57,8 @@ print '=' x 70, "\n";
 
 # 2. cppTree.pl.
 
+exit(0) if (! $ENV{'PERCEPS'});
+
 print "Testing a C++ tree. \n";
 
 my($font) = 'Vacuum';

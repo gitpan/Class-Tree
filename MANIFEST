@@ -1,11 +1,11 @@
 Changes.txt
-cppTree.pl
-dirTree.pl
-Makefile.PL
-MANIFEST
-MANIFEST.SKIP
-Readme.txt
 test.pl
 Tree.pm
+Makefile.PL
+Tree.html
+MANIFEST
+README
+examples/dirTree.pl
+examples/cppTree.pl
 t/base.t
 t/family.h

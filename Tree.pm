@@ -42,7 +42,7 @@ require Exporter;
 
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-$VERSION	= '1.21';
+$VERSION	= '1.23';
 
 # Preloaded methods go here.
 
