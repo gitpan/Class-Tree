@@ -41,13 +41,13 @@ require 'projectLib.pl';
 
 my($font) = 'Vacuum';
 
-my($dir, $exists) = &prepareDir($ARGV[0]);
+my($dir, $exists, $currentDir) = &prepareDir($ARGV[0]);
 
 die("Failure: $dir does not exist\n") if (! -e $dir);
 
 my($tree) = new Class::Tree;
 
-$tree -> buildClassTree($dir, $font);
+$tree -> buildClassTree($dir, $font, $currentDir);
 
 print "Class tree\n----------\n";
 $tree -> writeTree();

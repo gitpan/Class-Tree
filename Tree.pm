@@ -19,6 +19,7 @@ no strict 'refs';
 use vars qw(@EXPORT @EXPORT_OK @ISA);
 use vars qw($root $VERSION);
 
+use Carp;
 use Config;
 use Exporter;
 use File::Find;
@@ -29,19 +30,19 @@ use File::Find;
 
 # --------------------------------------------------------------------------
 
-$VERSION    = '1.01';
+$VERSION    = '1.10';
 
 #-------------------------------------------------------------------
 
 sub buildClassTree
 {
-	my($self, $dir, $fontName) = @_;
+	my($self, $dir, $fontName, $baseDir) = @_;
 
 	$self -> {'fontName'} = $fontName if (defined($fontName) );
 
-	$self -> perceps($dir);
+	$self -> perceps($dir, $baseDir);
 
-	$self -> processDirectory($self -> readDirectory($dir) );
+	$self -> processDirectory($self -> readDirectory($dir, $baseDir) );
 
 	$self -> processParents(0, $self -> {'fontName'}, $self -> {'fontName'});
 
@@ -170,24 +171,31 @@ sub new
 
 sub perceps
 {
-	my($self, $dirName) = @_;
+	my($self, $dirName, $baseDir) = @_;
 
 	chdir($dirName) || die("Can't chdir($dirName): $!");
 
 	# Create Perceps template file. Perceps creates *.report.
 	my($fileName) = 'CLASS.report.tmpl';
 
-	open(OUT, "> $fileName") || die("Can't open $fileName: $!");
+	if (! open(OUT, "> $fileName") )
+	{
+		carp("Can't open($fileName) for writing: $! \nTrying current directory \n");
+		$fileName	= $baseDir . $fileName;
+		$dirName	= $baseDir;
+		open(OUT, "> $fileName") || croak("Can't even open($fileName) for writing: $!\n");  
+	}
+
 	print OUT "{class} {parents}\n";
 	close(OUT);
 
 	# Run Perceps.
-	system('perl', "$ENV{'PERCEPS'}/perceps.pl -f > nul") if ($Config{'osname'} eq 'MSWin32');
-	system("$ENV{'PERCEPS'}/perceps.pl -f > /dev/null") if ($Config{'osname'} ne 'MSWin32');
+	system('perl', "$ENV{'PERCEPS'}/perceps.pl -q -f -d $dirName") if ($Config{'osname'} eq 'MSWin32');
+	system("$ENV{'PERCEPS'}/perceps.pl -q -f -d $dirName") if ($Config{'osname'} ne 'MSWin32');
 
 	# Delete the template file & the .perceps file, leaving *.report.
-	unlink 'CLASS.report.tmpl';
-	unlink '.perceps';
+	unlink $fileName;
+	unlink "$dirName.perceps";
 
 }	# End of perceps.
 
@@ -286,26 +294,20 @@ sub processTree
 
 sub readDirectory
 {
-	my($self, $dirName) = @_;
+	my($self, $dirName, $baseDir) = @_;
 
-	my($file) = ();
+	# Read all report file names.
+	my(@reportFile)	= glob("$dirName*.report");
+	@reportFile		= glob("$baseDir*.report") if ($#reportFile < 0);
 
-	# Read all file names.
-	chdir($dirName) || die("Can't chdir($dirName): $!");
-	opendir(DIR, $dirName) || die("Can't open $dirName: $!");
-	@$file = readdir(DIR);
-	closedir(DIR);
-	chomp(@$file);
-
-	# Select report-type file names.
-	@$file = grep(/\.report$/, @$file);
+	croak("Can't find perceps output in either $dirName or $baseDir\n") if ($#reportFile < 0);
 
 	# Process each member-type file.
 	my($fileName, $line);
 
 	$line = ();
 
-	for $fileName (@$file)
+	for $fileName (@reportFile)
 	{
 		# Read the 1st line in this file.
 		open(INX, $fileName) || die "Can't open $fileName: $!. \n";
@@ -481,6 +483,12 @@ first space stops the dereference taking place. Outside double quotes the
 scanner correctly associates the $self token with the {'thing'} token.
 
 I regard this as a bug.
+
+=head1 CHANGES
+
+V 1.10 attempts to write to the current directory if it cannot write to the directory
+containing the *.h files. This makes it possible to run testCppTree.pl (say) and input
+a directory on CDROM. This patch requires
 
 =head1 AUTHOR
 
