@@ -1,119 +1,56 @@
-NAME
-    "Class::Tree" - Build and print hierarchical information such as
-    directory trees and C++ classes.
+README file for Class::Tree.
 
-SYNOPSIS
-            use Class::Tree;
+Warning: WinZip 8.1 and 9.0 both contain an 'accidental' bug which stops
+them recognizing POSIX-style directory structures in valid tar files.
+You are better off using a reliable tool such as InfoZip:
+ftp://ftp.info-zip.org/pub/infozip/
 
-            # Or ...
-            # use Class::Tree qw($root);
+1 Installing from a Unix-like distro
+------------------------------------
+shell>gunzip Class-Tree-1.24.tgz
+shell>tar mxvf Class-Tree-1.24.tar
 
-            # 1. A directory tree.
-            my($dir1)  = 'someDir/someSubdir';
-            my($tree1) = new Class::Tree;
-            $tree1 -> buildDirTree($dir1, ['CVS']);
-            $tree1 -> writeTree();
+On Unix-like systems, assuming you have installed Module::Build V 0.25+:
 
-            # 2. A C++ class tree.
-            use Cwd;
-            my($currentDir) = cwd();
-            my($dir2)       = 'someDir/someSubdir'; # Contains *.h. See t/family.h.
-            my($origin)     = 'Root';
-            my($tree2)      = new Class::Tree;
-            $tree2 -> buildClassTree($dir2, $origin, $currentDir);
-            print "Class tree\n----------\n";
-            $tree2 -> writeTree();
-            print "\n";
-            print "Class list\n----------\n";
-            $tree2 -> writeClassList();
+shell>perl Build.PL
+shell>./Build
+shell>./Build test
+shell>./Build install
 
-DESCRIPTION
-    The "Class::Tree" module provides a simple way of building:
+On MS Windows-like systems, assuming you have installed Module::Build V 0.25+:
 
-    *   Directory trees
+shell>perl Build.PL
+shell>perl Build
+shell>perl Build test
+shell>perl Build install
 
-    *   C++ class trees
+Alternately, without Module::Build, you do this:
 
-ENVIRONMENT VARIABLE PERCEPS
-    I assume $ENV{'PERCEPS'} is the directory containing the C++ parser
-    perceps, or perceps.pl. So, you must define this variable before calling
-    buildClassTree().
+Note: 'make' on MS Windows-like systems may be called 'nmake' or 'dmake'.
 
-THE HASH REFERENCE $classRef -> {'root'}
-    This is an alias for $root. See below.
+shell>perl Makefile.PL
+shell>make
+shell>make test
+shell>su              (for Unix-like systems)
+shell>make install
+shell>exit            (for Unix-like systems)
 
-THE HASH REFERENCE $root
-    This points to the root of the tree.
+On all systems:
 
-METHOD: buildClassTree($dir, $fontName, $baseDir)
-    Call this to initiate processing by the C++ parser 'perceps'.
+Run Tree.pm through you favourite pod2html translator.
 
-    The directories $dir and $baseDir are passed to 'perceps'.
+If you are using my fancy-pom2.pl, with its 'default.css' file installed in
+/apache2/htdocs/css/, you'd do:
 
-    $fontName is a string used to label the root of the tree.
+shell>perl fancy-pom2.pl html -css Tree.pm > /apache2/htdocs/Tree.html
 
-    Then call writeTree() and/or writeClassList().
+or perhaps something like:
 
-METHOD: buildDirTree($dir, [qw/dirs to ignore/])
-    Call this to build a memory image of a directory tree. Use the 2nd
-    parameter to specify a list of directories to ignore.
+shell>perl fancy-pom2.pl html -css Tree.pm > /perl/html/site/lib/Class/Tree.html
 
-    Then call writeTree().
-
-METHOD: writeClassList()
-    Call this after calling buildClassTree(), to print the C++ class
-    structure.
-
-METHOD: writeTree()
-    Call this after calling buildClassTree() or buildDirTree(), to print the
-    directory structure.
-
-INSTALLATION
-    You install "Class::Tree", as you would install any perl module library,
-    by running these commands:
-
-            perl Makefile.PL
-            make
-            make test
-            make install
-
-    If you want to install a private copy of "Class::Tree" in your home
-    directory, then you should try to produce the initial Makefile with
-    something like this command:
-
-            perl Makefile.PL LIB=~/perl
-                    or
-            perl Makefile.PL LIB=C:/Perl/Site/Lib
-
-    If, like me, you don't have permission to write man pages into unix
-    system directories, use:
-
-            make pure_install
-
-    instead of make install. This option is secreted in the middle of p 414
-    of the second edition of the dromedary book.
-
-WARNING re Perl bug
-    As always, be aware that these 2 lines mean the same thing, sometimes:
-
-    *   $self -> {'thing'}
-
-    *   $self->{'thing'}
-
-    The problem is the spaces around the ->. Inside double quotes, "...",
-    the first space stops the dereference taking place. Outside double
-    quotes the scanner correctly associates the $self token with the
-    {'thing'} token.
-
-    I regard this as a bug.
-
-AUTHOR
-    "Class::Tree" was written by Ron Savage *<ron@savage.net.au>* in 1997.
-
-LICENCE
-    Australian copyright (c) 1999-2002 Ron Savage.
-
-            All Programs of mine are 'OSI Certified Open Source Software';
-            you can redistribute them and/or modify them under the terms of
-            The Artistic License, a copy of which is available at:
-            http://www.opensource.org/licenses/index.html
+2 Installing from an ActiveState distro
+---------------------------------------
+shell>unzip Class-Tree-1.24.zip
+shell>ppm install --location=. Class-Tree
+shell>del Class-Tree-1.24.ppd
+shell>del PPM-Class-Tree-1.24.tar.gz

@@ -1,0 +1,19 @@
+--- #YAML:1.0
+name: Class-Tree
+version: 1.24
+author:
+  - Ron Savage <ron@savage.net.au>
+abstract: |-
+  Build and print hierarchical information such as directory trees
+  and C++ classes.
+license: artistic
+requires:
+  Carp: 0
+  Config: 0
+  Cwd: 0
+  File::Find: 0
+build_requires:
+  Test::More: 0
+  Test::Pod: 0
+provides: {}
+generated_by: Module::Build version 0.24

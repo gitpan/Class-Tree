@@ -1,5 +1,9 @@
 Revision history for Perl extension Class-Tree.
 
+1.24  Mon Jul 19 14:43:00 2004
+	- Change Makefile.PL to coexist with Module::Build
+	- Add t/pod.t to test all PODs
+
 1.23  Sun Mar 23 11:29:00 2003
 	- Move demos into examples/ directory
 	- No source code changes in this version

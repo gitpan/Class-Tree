@@ -9,21 +9,26 @@ WriteMakefile
 		'AUTHOR' => 'Ron Savage (ron@savage.net.au)',
 		'ABSTRACT' => 'C++ class hierarchies & disk directories',
     ) : (),
-'clean'				=>
+	clean			=>
 	{
-	'FILES'			=> 'blib/* Makefile MANIFEST Class-Tree-*'
+		FILES		=> 'blib/* Makefile MANIFEST Class-Tree-*'
 	},
-'dist'				=>
+	dist			=>
 	{
-	'COMPRESS'		=> 'gzip',
-	'SUFFIX'		=> 'gz'
+		COMPRESS	=> 'gzip',
+		SUFFIX		=> 'gz'
 	},
-'DISTNAME'			=> 'Class-Tree',
-'NAME'				=> 'Class::Tree',
-'PM'				=>
+	DISTNAME		=> 'Class-Tree',
+	NAME			=> 'Class::Tree',
+	PL_FILES		=> {},
+	PREREQ_PM		=>
 	{
-	'Tree.pm'	 	=> '$(INST_LIBDIR)/Tree.pm',
+		Carp		=> 0,
+		Config		=> 0,
+		Cwd			=> 0,
+		File::Find	=> 0,
+		Test::More	=> 0,
+		Test::Pod	=> 0,
 	},
-'PREREQ_PM'			=> {},
-'VERSION_FROM'		=> 'Tree.pm'
+	VERSION_FROM	=> 'lib/Class/Tree.pm'
 );

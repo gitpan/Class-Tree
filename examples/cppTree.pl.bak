@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/gnu/bin/perl -w
 #
 # Name:
 #	cppTree.pl.
@@ -41,7 +41,6 @@
 # ----------------------------------------------------------------------
 
 use strict 'vars';
-use warnings;
 
 use Class::Tree;
 use Cwd;

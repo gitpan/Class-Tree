@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/gnu/bin/perl -w
 #
 # Name:
 #	test.pl.
@@ -23,7 +23,6 @@
 
 use strict;
 no strict 'refs';
-use warnings;
 
 use Class::Tree qw($root);
 use Cwd;

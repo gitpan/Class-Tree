@@ -1,11 +1,16 @@
+Build.PL
 Changes.txt
-test.pl
-Tree.pm
-Makefile.PL
-Tree.html
-MANIFEST
-README
-examples/dirTree.pl
 examples/cppTree.pl
+examples/cppTree.pl.bak
+examples/dirTree.pl
+examples/dirTree.pl.bak
+lib/Class/Tree.pm
+Makefile.PL
+MANIFEST			This list of files
+MANIFEST.SKIP
+META.yml
+README
 t/base.t
 t/family.h
+t/pod.t
+test.pl
