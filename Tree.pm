@@ -34,7 +34,7 @@ require Exporter;
 
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-$VERSION	= '1.11';
+$VERSION	= '1.12';
 
 # Preloaded methods go here.
 
@@ -110,7 +110,7 @@ sub evalClassTree
 
 		$code .= ' = {}';
 		eval $code;
-		die $@ if $@;
+		croak($@) if $@;
 	}
 
 }	# End of evalClassTree.
@@ -140,7 +140,7 @@ sub evalDirTree
 		}
 
 		eval "$code = {}" if (! $ignoreDir);
-		die $@ if $@;
+		croak($@) if $@;
 	}
 
 }	# End of evalDirTree.
@@ -186,7 +186,7 @@ sub perceps
 {
 	my($self, $dirName, $baseDir) = @_;
 
-	chdir($dirName) || die("Can't chdir($dirName): $!");
+	chdir($dirName) || croak("Can't chdir($dirName): $!");
 
 	# Create Perceps template file. Perceps creates *.report.
 	my($fileName) = 'CLASS.report.tmpl';
@@ -196,19 +196,23 @@ sub perceps
 		carp("Can't open($fileName) for writing: $! \nTrying current directory \n");
 		$fileName	= $baseDir . $fileName;
 		$dirName	= $baseDir;
-		open(OUT, "> $fileName") || croak("Can't even open($fileName) for writing: $!\n");  
+		open(OUT, "> $fileName") || croak("Can't even open($fileName) for writing: $!");  
 	}
 
 	print OUT "{class} {parents}\n";
 	close(OUT);
 
 	# Run Perceps.
-	system('perl', "$ENV{'PERCEPS'}/perceps.pl -q -f -d $dirName") if ($Config{'osname'} eq 'MSWin32');
-	system("$ENV{'PERCEPS'}/perceps.pl -q -f -d $dirName") if ($Config{'osname'} ne 'MSWin32');
+	croak('Environment variable PERCEPS=<Dir of perceps[.pl]> not set') if (! defined($ENV{'PERCEPS'}) );
+	my($perceps)	= "$ENV{'PERCEPS'}/perceps";
+	$perceps		.= '.pl' if (! -e $perceps);
+	croak('$perceps not found') if (! -e $perceps);
+	system('perl', "$perceps -q -f -d $dirName") if ($Config{'osname'} eq 'MSWin32');
+	system("$perceps -q -f -d $dirName") if ($Config{'osname'} ne 'MSWin32');
 
 	# Delete the template file & the .perceps file, leaving *.report.
 	unlink $fileName;
-	unlink "$dirName.perceps";
+	unlink "$dirName/.perceps";
 
 }	# End of perceps.
 
@@ -313,7 +317,7 @@ sub readDirectory
 	my(@reportFile)	= glob("$dirName/*.report");
 	@reportFile		= glob("$baseDir/*.report") if ($#reportFile < 0);
 
-	croak("Can't find perceps output in either $dirName or $baseDir\n") if ($#reportFile < 0);
+	croak("Can't find perceps output in either $dirName or $baseDir") if ($#reportFile < 0);
 
 	# Process each member-type file.
 	my($fileName, $line);
@@ -323,7 +327,7 @@ sub readDirectory
 	for $fileName (@reportFile)
 	{
 		# Read the 1st line in this file.
-		open(INX, $fileName) || die "Can't open $fileName: $!. \n";
+		open(INX, $fileName) || croak("Can't open $fileName: $!");
 		$_ = <INX>;
 		close(INX);
 		chomp($_);
