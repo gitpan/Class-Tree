@@ -1,6 +1,10 @@
+Changes.txt
 MANIFEST
 MANIFEST.SKIP
 Makefile.PL
 Tree.pm
-testCppTree.pl
-testDirTree.pl
+cppTree.pl
+dirTree.pl
+test.pl
+t/base.t
+t/family.h

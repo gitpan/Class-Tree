@@ -15,28 +15,39 @@ package Class::Tree;
 
 use strict;
 no strict 'refs';
-
-use vars qw(@EXPORT @EXPORT_OK @ISA);
-use vars qw($root $VERSION);
+use vars qw($root $VERSION @ISA @EXPORT @EXPORT_OK);
 
 use Carp;
 use Config;
-use Exporter;
+use Cwd;
 use File::Find;
 
-@ISA		= qw(Exporter);
+require Exporter;
+
+@ISA = qw(Exporter);
+
+# Items to export into callers namespace by default. Note: do not export
+# names by default without a very good reason. Use EXPORT_OK instead.
+# Do not simply export all your public functions/methods/constants.
+
 @EXPORT		= qw();
+
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-# --------------------------------------------------------------------------
+$VERSION	= '1.11';
 
-$VERSION    = '1.10';
+# Preloaded methods go here.
 
 #-------------------------------------------------------------------
 
 sub buildClassTree
 {
 	my($self, $dir, $fontName, $baseDir) = @_;
+
+	# Normalize $dir.
+	my($currentDir) = cwd();
+	chdir($dir) || croak("Can't chdir($dir): $!");
+	$dir = cwd();
 
 	$self -> {'fontName'} = $fontName if (defined($fontName) );
 
@@ -52,6 +63,8 @@ sub buildClassTree
 
 	($self -> {'last'} -> {$self -> {'rootName'} }, $self -> {'kids'} -> {$self -> {'rootName'} }) =
 		$self -> processTree(0, $root, $self -> {'rootName'} );
+
+	chdir($currentDir) || croak("Can't chdir($currentDir): $!");
 
 }	# End of buildClassTree.
 
@@ -297,8 +310,8 @@ sub readDirectory
 	my($self, $dirName, $baseDir) = @_;
 
 	# Read all report file names.
-	my(@reportFile)	= glob("$dirName*.report");
-	@reportFile		= glob("$baseDir*.report") if ($#reportFile < 0);
+	my(@reportFile)	= glob("$dirName/*.report");
+	@reportFile		= glob("$baseDir/*.report") if ($#reportFile < 0);
 
 	croak("Can't find perceps output in either $dirName or $baseDir\n") if ($#reportFile < 0);
 
@@ -419,6 +432,8 @@ sub writeTree
 
 # --------------------------------------------------------------------------
 
+# Autoload methods go after =cut, and are processed by the autosplit program.
+
 1;
 
 __END__
@@ -488,7 +503,7 @@ I regard this as a bug.
 
 V 1.10 attempts to write to the current directory if it cannot write to the directory
 containing the *.h files. This makes it possible to run testCppTree.pl (say) and input
-a directory on CDROM. This patch requires
+a directory on CDROM.
 
 =head1 AUTHOR
 

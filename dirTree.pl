@@ -1,19 +1,21 @@
 #!/usr/gnu/bin/perl -w
 #
 # Name:
-#	testDirTree.pl.
+#	test.pl.
 #
 # Purpose:
 #	Print a directory tree.
+#
+# Parameter:
+#	The directory to operate in.
 
 use integer;
 use strict;
 no strict 'refs';
 
 use Class::Tree qw($root);
+use Cwd;
 use Getopt::Simple qw($switch);
-
-require 'projectLib.pl';
 
 # ----------------------------------------------------------------------
 
@@ -69,7 +71,8 @@ sub printTree
 
 &init();
 
-my($dir, $exists) = &prepareDir($ARGV[0]);
+my($dir)	= shift || die("Usage: $0 <someDir>");
+$dir		= cwd() if ($dir eq '.');
 
 die("Failure: $dir does not exist\n") if (! -e $dir);
 
@@ -92,23 +95,23 @@ __END__
 
 =head1 NAME
 
-C<testDirTree.pl> - Print a directory hierarchy.
+C<test.pl> - Print a directory hierarchy.
 
 =head1 SYNOPSIS
 
-	...>perl testDirTree.pl -i obj -i CVS dirName
+	...>perl test.pl -i obj -i CVS dirName
 
 =head1 DESCRIPTION
 
-C<testDirTree.pl> runs under both Unix and DOS (aka Windows).
+C<test.pl> runs under both Unix and DOS (aka Windows).
 
-C<testDirTree.pl> outputs the directory tree starting at the given directory.
+C<test.pl> outputs the directory tree starting at the given directory.
 The complete path to the given directory is output, but sibling directories
 are ignored.
 
 =head1 COMMAND LINE SWITCHES
 
-C<testDirTree.pl> provides these switches:
+C<test.pl> provides these switches:
 
 =over 4
 
@@ -132,21 +135,13 @@ Class::Tree - one of mine
 
 =item *
 
-Cwd
-
-=item *
-
 Getopt::Simple - one of mine
-
-=item *
-
-projectLib.pl - one of mine
 
 =back
 
 =head1 AUTHOR
 
-C<testDirTree.pl> was written by Ron Savage I<E<lt>rpsavage@ozemail.com.auE<gt>> in 1997.
+C<test.pl> was written by Ron Savage I<E<lt>rpsavage@ozemail.com.auE<gt>> in 1997.
 
 =head1 LICENCE
 
