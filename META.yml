@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name: Class-Tree
-version: 1.24
+version: 1.25
 author:
   - Ron Savage <ron@savage.net.au>
 abstract: |-
@@ -15,5 +15,8 @@ requires:
 build_requires:
   Test::More: 0
   Test::Pod: 0
-provides: {}
-generated_by: Module::Build version 0.24
+provides:
+  Class::Tree:
+    file: lib/Class/Tree.pm
+    version: 1.25
+generated_by: Module::Build version 0.2611

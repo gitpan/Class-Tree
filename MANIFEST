@@ -8,9 +8,9 @@ lib/Class/Tree.pm
 Makefile.PL
 MANIFEST			This list of files
 MANIFEST.SKIP
-META.yml
 README
 t/base.t
 t/family.h
 t/pod.t
 test.pl
+META.yml
