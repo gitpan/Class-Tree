@@ -23,7 +23,7 @@ package Class::Tree;
 
 use strict;
 no strict 'refs';
-use vars qw($root $VERSION @ISA @EXPORT @EXPORT_OK);
+use vars qw($root @ISA @EXPORT @EXPORT_OK);
 
 use Carp;
 use Config;
@@ -42,7 +42,7 @@ require Exporter;
 
 @EXPORT_OK	= qw($root);	# An alias for $self -> {'root'}.
 
-$VERSION	= '1.25';
+our $VERSION = '1.27';
 
 # Preloaded methods go here.
 

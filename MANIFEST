@@ -1,16 +1,14 @@
 Build.PL
-Changes.txt
+Changelog.ini
+CHANGES
 examples/cppTree.pl
-examples/cppTree.pl.bak
 examples/dirTree.pl
-examples/dirTree.pl.bak
 lib/Class/Tree.pm
 Makefile.PL
 MANIFEST			This list of files
-MANIFEST.SKIP
+META.yml
 README
 t/base.t
 t/family.h
 t/pod.t
 test.pl
-META.yml
